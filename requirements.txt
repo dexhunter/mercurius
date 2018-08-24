@@ -1,0 +1,13 @@
+pandas
+xarray
+tensorflow
+numpy
+ccxt
+requests
+flask
+flask-cors
+flask-socketio
+matplotlib
+scipy
+sqlalchemy
+cvxopt
