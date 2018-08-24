@@ -71,6 +71,7 @@ class expert(object):
         logging.info('tc=%f, Final Return: %.2f\n' % (tc, cum_ret))
 
         self.pDiff = daily_ret
+        self.last_b = b
 
     def finish(self, re=True, plot=False):
         """
@@ -81,6 +82,7 @@ class expert(object):
             result = {}
             result['portfolio'] = np.cumprod(self.pDiff)
             result['portfolio_diff'] = self.pDiff
+            result['last_b'] = self.last_b
             return result
 
         if plot:

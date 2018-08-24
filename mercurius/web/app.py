@@ -71,7 +71,7 @@ def get_coin_price(exchange="poloniex"):
     algo = request.args.get('algo', 'ucrp')
 
     # fixed trading list
-    trading_list = ['ETH/BTC', 'ETC/BTC', 'LTC/BTC', 'XRP/BTC', 'XLM/BTC', 'XEM/BTC']
+    trading_list = ['BTC', 'ETH/BTC', 'ETC/BTC', 'LTC/BTC', 'XRP/BTC', 'XLM/BTC', 'XEM/BTC']
 
     tf = request.args.get('tf', '30m')  # timeframe
     #exchange = getattr(ccxt, exchange)
@@ -98,7 +98,7 @@ def get_coin_price(exchange="poloniex"):
     agent = ALGOS[algo]()
     agent.trade(close_data, tc=0.025)
     portfolio_value = agent.finish()
-    portfolio_weight = agent.get_b(close_data[-2,:])
+    m = close_data.shape[1]
 
     ind_re = []
     for ind in list(INDICATORS.keys()):
@@ -117,7 +117,7 @@ def get_coin_price(exchange="poloniex"):
     res['symbols'] = trading_list
     res['pv'] = portfolio_value['portfolio'][:-1].tolist() #do not get the last one(NaN)
     res['ind'] = ind_re
-    res['pw'] = portfolio_weight
+    res['pw'] = portfolio_value['last_b'].T.tolist()[0]
 
     return json.jsonify(res)
 

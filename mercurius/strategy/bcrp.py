@@ -60,6 +60,8 @@ class bcrp(expert):
             logging.info('%d\t%f\t%f\n' % (t+1, daily_ret[t], cumprod_ret[t]))
 
         logging.info('tc=%f, Final Return: %.2f\n' % (tc, cum_ret))
+        self.pDiff = daily_ret
+        self.last_b = b
 
 def opt_weights(X, max_leverage=1):
     x_0 = max_leverage * np.ones(X.shape[1]) / float(X.shape[1])

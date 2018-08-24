@@ -58,6 +58,7 @@ class best(expert):
 
         logging.info('tc=%f, Final Return: %.2f\n' % (tc, cum_ret))
         self.pDiff = daily_ret
+        self.last_b = b
 
 if __name__ == '__main__':
     tools.run(best())
