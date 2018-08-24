@@ -83,17 +83,22 @@ def get_coin_price(exchange="poloniex"):
     data = exchange.fetch_ohlcv(pair, tf, start, num_candles)
     time_list = []
     ohlc = []
+    indexes = [1,4,2,3]
     volume = []
+    counter = 0
     for i in data:
         time_list.append((datetime.utcfromtimestamp(int(i[0] / 1e3))).strftime('%Y-%m-%d %H:%M:%S'))
-        ohlc.append(i[1:5])
-        volume.append(i[5])
+        ohlc.append([i[k] for k in indexes])
+        bool_vol = 1 if i[1] > i[4] else -1
+        volume.append([counter, i[5], bool_vol])
+        counter += 1
     #app.logger.info(data)
 
     close_data = CandleReader(trading_list, start, end, tf).get_close(False, True)
     agent = ALGOS[algo]()
     agent.trade(close_data, tc=0.025)
     portfolio_value = agent.finish()
+    portfolio_weight = agent.get_b(close_data[-2,:])
 
     ind_re = []
     for ind in list(INDICATORS.keys()):
@@ -107,11 +112,12 @@ def get_coin_price(exchange="poloniex"):
         ind_re.append(rs)
 
     res['time'] = time_list
-    res['ohlc'] = ohlc
+    res['ochl'] = ohlc
     res['vol'] = volume
     res['symbols'] = trading_list
     res['pv'] = portfolio_value['portfolio'][:-1].tolist() #do not get the last one(NaN)
     res['ind'] = ind_re
+    res['pw'] = portfolio_weight
 
     return json.jsonify(res)
 
