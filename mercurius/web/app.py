@@ -118,7 +118,7 @@ def get_coin_price(exchange="poloniex"):
     res['symbols'] = ['BTC'] + trading_list
     res['pv'] = np.nan_to_num(portfolio_value['portfolio']).tolist() #do not get the last one(NaN)
     res['ind'] = ind_re
-    res['pw'] = portfolio_value['last_b'].T.tolist()[0]
+    res['pw'] = portfolio_value['last_b'].T.tolist()
 
     return json.jsonify(res)
 

@@ -71,7 +71,7 @@ class expert(object):
         logging.info('tc=%f, Final Return: %.2f\n' % (tc, cum_ret))
 
         self.pDiff = daily_ret
-        self.last_b = b
+        self.last_b = np.squeeze(b)
 
     def finish(self, re=True, plot=False):
         """
