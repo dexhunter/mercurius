@@ -71,7 +71,7 @@ def get_coin_price(exchange="poloniex"):
     algo = request.args.get('algo', 'ucrp')
 
     # fixed trading list
-    trading_list = ['BTC', 'ETH/BTC', 'ETC/BTC', 'LTC/BTC', 'XRP/BTC', 'XLM/BTC', 'XEM/BTC']
+    trading_list = ['ETH/BTC', 'ETC/BTC', 'LTC/BTC', 'XRP/BTC', 'XLM/BTC', 'XEM/BTC']
 
     tf = request.args.get('tf', '30m')  # timeframe
     #exchange = getattr(ccxt, exchange)
@@ -114,7 +114,7 @@ def get_coin_price(exchange="poloniex"):
     res['time'] = time_list
     res['ochl'] = ohlc
     res['vol'] = volume
-    res['symbols'] = trading_list
+    res['symbols'] = ['BTC'] + trading_list
     res['pv'] = portfolio_value['portfolio'][:-1].tolist() #do not get the last one(NaN)
     res['ind'] = ind_re
     res['pw'] = portfolio_value['last_b'].T.tolist()[0]
