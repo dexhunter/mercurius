@@ -14,6 +14,7 @@ from mercurius.strategy.ubah import ubah
 from mercurius.strategy.best import best
 from mercurius.data.candlereader import CandleReader
 from mercurius.utils.indicators import max_drawdown, sharpe, positive_count, negative_count, moving_accumulate, sortino
+import requests
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -52,9 +53,7 @@ def run_algo():
             x / 1e6 for x in da['openTime'].values.astype(np.int64)]
         # print(response['date'])
         # print(type(response['date']))
-        print('PASS')
         return json.jsonify(response)
-    print('FAIL')
     return 'FAIL'
 
 
@@ -109,13 +108,15 @@ def get_coin_price(exchange="poloniex"):
         if isinstance(rs, np.int64):
             #print(ind, rs)
             rs = int(rs)
+        if np.isnan(rs):
+            rs = 0
         ind_re.append(rs)
 
     res['time'] = time_list
     res['ochl'] = ohlc
     res['vol'] = volume
     res['symbols'] = ['BTC'] + trading_list
-    res['pv'] = portfolio_value['portfolio'][:-1].tolist() #do not get the last one(NaN)
+    res['pv'] = np.nan_to_num(portfolio_value['portfolio']).tolist() #do not get the last one(NaN)
     res['ind'] = ind_re
     res['pw'] = portfolio_value['last_b'].T.tolist()[0]
 
@@ -133,6 +134,12 @@ def get_back_test(starttimestamp, endtimestamp):
     time_values = res.get("portfolio_changes_history").keys().tolist()
     rate_values = [value for value in generator(res.get("portfolio_changes_history").values)]
     return json.jsonify({"xaxis": time_values, "data": rate_values})
+
+@app.route('/vollist', methods=['POST', 'GET'])
+@cross_origin()
+def sort_by_vol():
+    re = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=20', headers={'X-CMC_PRO_API_KEY': 'f22cbc37-a098-4fb3-84f4-872f38d2b023'})
+    return re.content
 
 
 def generator(list):
