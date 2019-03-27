@@ -1,6 +1,6 @@
 Yet Another Portfolio Management Toolbox.
 
-**Use at your own risk.**
+IMPORTANT: **Live Trading at your own risk.**
 
 ## Installation
 
@@ -8,11 +8,17 @@ Yet Another Portfolio Management Toolbox.
 pip install mercurius
 ```
 
-## Usage
+## Example Usage
 
 ```
-from mercurius import
+# Uniform Constant Rebalanced Portfolio
 
+from mercurius.strategy import ucrp
+
+up = ucrp()
+up.trade(input_data, tc=0.025)
+result = up.finish(True, True)
+print(result['portfolio'])
 ```
 
 ## Features
@@ -28,9 +34,11 @@ from mercurius import
 
 TODOs (Check [ISSUES](https://github.com/dexhunter/mercurius/issues))
 
-## Disclaimer
+---
 
-This project is based on OLPS[1] and PGPortfolio[2]. Many thanks to the authors.
+Disclaimer
 
-[1] https://github.com/olps/olps
-[2] https://github.com/zhengyaoJiang/PGPortfolio
+This project is based on OLPS<sup>1</sup> and PGPortfolio<sup>2</sup>. Many thanks to the authors.
+
+1. https://github.com/olps/olps
+2. https://github.com/zhengyaoJiang/PGPortfolio
