@@ -1,24 +1,32 @@
-On-Line Portfolio Selection (OPS) with deep leraning methods.
+Yet Another Portfolio Management Toolbox.
 
 **Use at your own risk.**
 
+## Installation
+
+```
+pip install mercurius
+```
+
+## Usage
+
+```
+from mercurius import
+
+```
+
 ## Features
 
-* Powerful Data Manipulation
+* Data Augmentation
     * Concat different assets ohlcv
     * Concat different assets ticker
-* Backtest/Papertrade/Onlinetrade
-* web interaction
-* invoke smart contract
-* baseline algorithms
-* support cryptocurrency, forex, ...
+* Backtest
+* Trading algorithms [full list](docs/algorithms.md)
 
-## Dependencies
 
-* ccxt
-* pandas
-* xarray
-* ...
+## Contributing
+
+TODOs (Check [ISSUES](https://github.com/dexhunter/mercurius/issues))
 
 ## Disclaimer
 

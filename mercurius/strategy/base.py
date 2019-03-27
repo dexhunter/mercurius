@@ -1,5 +1,6 @@
 import numpy as np
 from time import time
+from sys import exit
 import logging
 import matplotlib as mpl
 mpl.use('agg')
