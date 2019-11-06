@@ -17,4 +17,5 @@ setuptools.setup(
     url="https://github.com/dexhunter/mercurius-dev",
     packages=setuptools.find_packages(),
     install_requires=reqs,
+    license='GPLv3',
 )
